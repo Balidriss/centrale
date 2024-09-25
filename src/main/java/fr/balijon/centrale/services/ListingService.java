@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class ListingService implements ServiceListInterface<Listing, Long, Listing, Listing> {
+public class ListingService implements ServiceListInterface<Listing, String, Listing, Listing> {
 
     public ListingRepository listingRepository;
 
@@ -43,19 +43,20 @@ public class ListingService implements ServiceListInterface<Listing, Long, Listi
     }
 
     @Override
-    public Listing update(Listing o, Long id) {
+    public Listing update(Listing o, String id) {
         Listing listing = new Listing();
         return listingRepository.saveAndFlush(listing);
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
         listingRepository.delete(findOneById(id));
     }
 
-
     @Override
-    public Listing findOneById(Long id) {
-        return  listingRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    public Listing findOneById(String id) {
+        return listingRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
+
+
 }
