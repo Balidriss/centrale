@@ -24,14 +24,18 @@ public class FuelService implements ServiceListInterface<Fuel, Long, Fuel, Fuel>
     @Override
     public Fuel create(Fuel o) {
         Fuel fuel = new Fuel();
-    //TODO
+        fuel.setType(o.getType());
+        fuel.setLogo(o.getLogo());
+        fuel.setListings(o.getListings());
         return fuelRepository.saveAndFlush(fuel);
     }
 
     @Override
     public Fuel update(Fuel o, Long id) {
         Fuel fuel = fuelRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-    //TODO
+        fuel.setType(o.getType());
+        fuel.setLogo(o.getLogo());
+        fuel.setListings(o.getListings());
         return fuelRepository.saveAndFlush(fuel);
     }
 

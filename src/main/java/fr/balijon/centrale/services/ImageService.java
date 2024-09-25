@@ -25,14 +25,16 @@ public class ImageService implements ServiceListInterface<Image, String, Image, 
     @Override
     public Image create(Image o) {
         Image image = new Image();
-
+        image.setPath(o.getPath());
+        image.setListing(o.getListing());
         return imageRepository.saveAndFlush(image);
     }
 
     @Override
     public Image update(Image o, String id) {
         Image image = imageRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-    //TODO
+        image.setPath(o.getPath());
+        image.setListing(o.getListing());
         return imageRepository.saveAndFlush(image);
     }
 

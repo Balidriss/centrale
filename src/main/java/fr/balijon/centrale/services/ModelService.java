@@ -24,14 +24,18 @@ public class ModelService implements ServiceListInterface<Model, Long, Model, Mo
     @Override
     public Model create(Model o) {
         Model model = new Model();
-    //TODO
+        model.setName(o.getName());
+        model.setBrand(o.getBrand());
+        model.setListings(o.getListings());
         return modelRepository.saveAndFlush(model);
     }
 
     @Override
     public Model update(Model o, Long id) {
         Model model = modelRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-    //TODO
+        model.setName(o.getName());
+        model.setBrand(o.getBrand());
+        model.setListings(o.getListings());
         return modelRepository.saveAndFlush(model);
     }
 
