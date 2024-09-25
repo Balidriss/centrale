@@ -8,6 +8,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -24,14 +25,17 @@ public class FavoriteService implements ServiceListInterface<Favorite, Long, Fav
     @Override
     public Favorite create(Favorite o) {
         Favorite favorite = new Favorite();
-    //TODO
+        favorite.setCreatedAt(LocalDateTime.now());
+        favorite.setUser(o.getUser());
+        favorite.setListing(o.getListing());
         return favoriteRepository.saveAndFlush(favorite);
     }
 
     @Override
     public Favorite update(Favorite o, Long id) {
         Favorite favorite = favoriteRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-    //TODO
+        favorite.setUser(o.getUser());
+        favorite.setListing(o.getListing());
         return favoriteRepository.saveAndFlush(favorite);
     }
 

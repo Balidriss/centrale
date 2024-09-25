@@ -24,14 +24,16 @@ public class BrandService implements ServiceListInterface<Brand, Long, Brand, Br
     @Override
     public Brand create(Brand o) {
         Brand brand = new Brand();
-    //TODO
+        brand.setName(o.getName());
+        brand.setModels(o.getModels());
         return brandRepository.saveAndFlush(brand);
     }
 
     @Override
     public Brand update(Brand o, Long id) {
         Brand brand = brandRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-    //TODO
+        brand.setName(o.getName());
+        brand.setModels(o.getModels());
         return brandRepository.saveAndFlush(brand);
     }
 
