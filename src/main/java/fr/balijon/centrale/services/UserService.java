@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -29,13 +30,14 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
         user.setFavorites(o.getFavorites());
         user.setListings(o.getListings());
         user.setPassword(o.getPassword());
-        user.setRole(o.getRole());
+        user.setRoles(o.getRole());
         user.setEmail(o.getEmail());
         user.setPhone(o.getPhone());
         user.setActivationCode(o.getActivationCode());
         user.setPhoto(o.getPhoto());
         user.setSiret(o.getSiret());
         user.setBirthAt(o.getBirthAt());
+        user.setCreatedAt(LocalDateTime.now());
         return userRepository.saveAndFlush(user);
     }
 
@@ -45,7 +47,7 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
         user.setFavorites(o.getFavorites());
         user.setListings(o.getListings());
         user.setPassword(o.getPassword());
-        user.setRole(o.getRole());
+        user.setRoles(o.getRole());
         user.setEmail(o.getEmail());
         user.setPhone(o.getPhone());
         user.setActivationCode(o.getActivationCode());

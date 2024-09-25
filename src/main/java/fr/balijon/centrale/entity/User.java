@@ -32,7 +32,10 @@ public class User {
     private LocalDateTime birthAt;
 
     @Column(nullable = false)
-    private String role;
+    private String roles;
+
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
 
     private String photo = null;
 
