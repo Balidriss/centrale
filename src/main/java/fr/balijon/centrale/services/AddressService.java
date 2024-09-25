@@ -27,14 +27,28 @@ public class AddressService implements ServiceListInterface<Address, Long, Addre
     @Override
     public Address create(Address o) {
         Address address = new Address();
-    //TODO
+        address.setCity(o.getCity());
+        address.setLatitude(o.getLatitude());
+        address.setLongitude(o.getLongitude());
+        address.setListings(o.getListings());
+        address.setStreetName(o.getStreetName());
+        address.setStreetNumber(o.getStreetNumber());
+        address.setZipCode(o.getZipCode());
+        address.setUser(o.getUser());
         return addressRepository.saveAndFlush(address);
     }
 
     @Override
     public Address update(Address o, Long id) {
         Address address = addressRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-    //TODO
+        address.setCity(o.getCity());
+        address.setLatitude(o.getLatitude());
+        address.setLongitude(o.getLongitude());
+        address.setListings(o.getListings());
+        address.setStreetName(o.getStreetName());
+        address.setStreetNumber(o.getStreetNumber());
+        address.setZipCode(o.getZipCode());
+        address.setUser(o.getUser());
         return addressRepository.saveAndFlush(address);
     }
 
