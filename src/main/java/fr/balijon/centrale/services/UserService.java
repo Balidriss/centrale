@@ -23,7 +23,7 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
 
     @Override
     public User create(UserDTO o) {
-        User student = new User()
+        User student = new User();
         //TODO
         return userRepository.saveAndFlush(student);
     }

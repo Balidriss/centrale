@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -17,4 +20,13 @@ public class Image {
 
     @Column(nullable = false)
     private String path;
+
+
+    //relations
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Listing listing;
+
+
 }

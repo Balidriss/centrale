@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -32,4 +35,10 @@ public class Address {
 
     @Column(nullable = false)
     private Long longitude;
+
+    @OneToOne
+    private User user;
+
+    @OneToMany(mappedBy = "address")
+    private List<Listing> listings = new ArrayList<Listing>();
 }

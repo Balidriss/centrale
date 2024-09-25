@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -38,5 +40,15 @@ public class User {
 
     private String siret = null;
 
+    //relations
 
+    @OneToMany(mappedBy = "owner")
+    private List<Listing> listings = new ArrayList<Listing>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Favorite> favorites = new ArrayList<Favorite>();
+
+
+    @OneToOne
+    private User user;
 }

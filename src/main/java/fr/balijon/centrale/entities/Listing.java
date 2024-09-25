@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -33,4 +34,28 @@ public class Listing {
 
     @Column(nullable = false)
     private String title;
+
+    //relations
+
+    @OneToMany(mappedBy = "listing")
+    private List<Favorite> favorites;
+
+    @OneToMany(mappedBy = "listing")
+    private List<Image> images;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private User owner;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Address address;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Model model;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Fuel fuel;
 }

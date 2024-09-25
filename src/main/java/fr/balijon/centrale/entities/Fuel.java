@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -20,4 +23,9 @@ public class Fuel {
 
     @Column(nullable = false)
     private String logo;
+
+    //relations
+
+    @OneToMany(mappedBy = "fuel")
+    private List<Listing> listings = new ArrayList<Listing>();
 }

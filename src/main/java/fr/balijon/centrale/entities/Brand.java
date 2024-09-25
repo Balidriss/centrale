@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -18,4 +21,6 @@ public class Brand {
     @Column(nullable = false)
     private String name;
 
+    @OneToMany(mappedBy = "brand")
+    private List<Model> models = new ArrayList<Model>();
 }
