@@ -30,10 +30,10 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
         user.setFavorites(o.getFavorites());
         user.setListings(o.getListings());
         user.setPassword(o.getPassword());
-        user.setRoles(o.getRole());
+        user.setRoles("[\"ROLE_USER\"]");
         user.setEmail(o.getEmail());
         user.setPhone(o.getPhone());
-        user.setActivationCode(o.getActivationCode());
+        user.setActivationCode(null);
         user.setPhoto(o.getPhoto());
         user.setSiret(o.getSiret());
         user.setBirthAt(o.getBirthAt());
@@ -47,10 +47,8 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
         user.setFavorites(o.getFavorites());
         user.setListings(o.getListings());
         user.setPassword(o.getPassword());
-        user.setRoles(o.getRole());
         user.setEmail(o.getEmail());
         user.setPhone(o.getPhone());
-        user.setActivationCode(o.getActivationCode());
         user.setPhoto(o.getPhoto());
         user.setSiret(o.getSiret());
         user.setBirthAt(o.getBirthAt());

@@ -29,12 +29,7 @@ public class UserDTO {
     @NotNull
     private LocalDateTime birthAt;
 
-    @NotBlank
-    private String role;
-
     private String photo = null;
-
-    private String activationCode = null;
 
     private String siret = null;
 
