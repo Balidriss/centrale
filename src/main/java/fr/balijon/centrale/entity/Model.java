@@ -1,4 +1,4 @@
-package fr.balijon.centrale.entities;
+package fr.balijon.centrale.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Data
-public class Brand {
+public class Model {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +21,15 @@ public class Brand {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "brand")
-    private List<Model> models = new ArrayList<Model>();
+    //relations
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Brand brand;
+
+    @OneToMany(mappedBy = "model")
+    private List<Listing> listings = new ArrayList<Listing>();
+
+
+
 }

@@ -1,4 +1,4 @@
-package fr.balijon.centrale.entities;
+package fr.balijon.centrale.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,20 +12,33 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Data
-public class Fuel {
+public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String type;
+    private String streetNumber;
 
     @Column(nullable = false)
-    private String logo;
+    private String streetName;
 
-    //relations
+    @Column(nullable = false)
+    private String zipCode;
 
-    @OneToMany(mappedBy = "fuel")
+    @Column(nullable = false)
+    private String city;
+
+    @Column(nullable = false)
+    private Long latitude;
+
+    @Column(nullable = false)
+    private Long longitude;
+
+    @OneToOne
+    private User user;
+
+    @OneToMany(mappedBy = "address")
     private List<Listing> listings = new ArrayList<Listing>();
 }

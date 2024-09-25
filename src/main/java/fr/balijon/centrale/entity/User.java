@@ -1,4 +1,4 @@
-package fr.balijon.centrale.entities;
+package fr.balijon.centrale.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -48,7 +48,4 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Favorite> favorites = new ArrayList<Favorite>();
 
-
-    @OneToOne
-    private User user;
 }
