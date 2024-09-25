@@ -15,7 +15,7 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String uuid;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "text")
     private String path;
 
 
