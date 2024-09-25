@@ -1,4 +1,4 @@
-package fr.balijon.centrale.entities;
+package fr.balijon.centrale.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,6 +21,6 @@ public class Brand {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "brand")
+    @OneToMany(mappedBy = "brand", cascade = CascadeType.REMOVE)
     private List<Model> models = new ArrayList<Model>();
 }

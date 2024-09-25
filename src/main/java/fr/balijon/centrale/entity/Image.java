@@ -1,12 +1,9 @@
-package fr.balijon.centrale.entities;
+package fr.balijon.centrale.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Data;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +15,7 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String uuid;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "text")
     private String path;
 
 

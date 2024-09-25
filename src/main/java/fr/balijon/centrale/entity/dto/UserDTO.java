@@ -1,6 +1,7 @@
-package fr.balijon.centrale.entities.dto;
+package fr.balijon.centrale.entity.dto;
 
-import jakarta.persistence.Column;
+import fr.balijon.centrale.entity.Favorite;
+import fr.balijon.centrale.entity.Listing;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -34,4 +37,10 @@ public class UserDTO {
     private String activationCode = null;
 
     private String siret = null;
+
+    private List<Listing> listings = new ArrayList<Listing>();
+
+    private List<Favorite> favorites = new ArrayList<Favorite>();
+
+
 }

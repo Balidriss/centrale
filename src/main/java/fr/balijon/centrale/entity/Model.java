@@ -1,4 +1,4 @@
-package fr.balijon.centrale.entities;
+package fr.balijon.centrale.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
