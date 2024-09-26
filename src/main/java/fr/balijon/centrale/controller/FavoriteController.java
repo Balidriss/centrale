@@ -3,6 +3,7 @@ package fr.balijon.centrale.controller;
 import fr.balijon.centrale.entity.Favorite;
 import fr.balijon.centrale.entity.dto.FavoriteDTO;
 import fr.balijon.centrale.services.FavoriteService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +17,14 @@ public class FavoriteController {
     private FavoriteService favoriteService;
 
     @PostMapping(name = "create")
-    public Favorite create(@RequestBody FavoriteDTO favorite)
+    public Favorite create(@Valid @RequestBody FavoriteDTO favorite)
     {
         return favoriteService.create(favorite);
+    }
+
+    @DeleteMapping("/{id}")
+    public boolean delete(@PathVariable Long id) {
+        return favoriteService.delete(id);
     }
 
 //   @DeleteMapping(name="delete")
