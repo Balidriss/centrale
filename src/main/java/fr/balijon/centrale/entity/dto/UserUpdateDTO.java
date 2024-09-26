@@ -19,12 +19,6 @@ public class UserUpdateDTO {
     private LocalDate birthAt;
 
     @NotBlank
-    private String firstName;
-
-    @NotBlank
-    private String lastName;
-
-    @NotBlank
     private String phone;
 
     private String siret;

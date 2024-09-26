@@ -30,11 +30,10 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
     @JsonView(JsonViews.UserShow.class)
     private String phone;
 
-    @Column(nullable = false)
+
     @JsonView(JsonViews.UserShow.class)
     private LocalDate birthAt;
 
