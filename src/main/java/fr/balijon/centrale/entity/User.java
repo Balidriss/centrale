@@ -50,6 +50,8 @@ public class User {
 
     private String activationCode = null;
 
+    private LocalDateTime activationCodeSentAt;
+
     @JsonView(JsonViews.UserShow.class)
     private String siret = null;
 

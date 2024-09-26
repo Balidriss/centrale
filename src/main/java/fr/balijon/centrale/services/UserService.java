@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeoutException;
 
 @Service
 @AllArgsConstructor
@@ -84,12 +85,15 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
         return  userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
-    public User activate(String code) {
-        // Activation code from email
+    public User activate(String code)  throws TimeoutException {
         User user = userRepository.findUserByActivationCode(code)
                 .orElseThrow(ActivationCodeException::new);
-        user.setActivationCode(null);
-        return userRepository.saveAndFlush(user);
 
-    }
-}
+        LocalDateTime current = LocalDateTime.now();
+        if (current.isAfter(user.getActivationCodeSentAt().plusMinutes(15))) {
+            throw new TimeoutException("La durée du code a expiré");
+        }
+        user.setActivationCode(null);
+        user.setActivationCodeSentAt(null);
+        return userRepository.saveAndFlush(user);
+}}
