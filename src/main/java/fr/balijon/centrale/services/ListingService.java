@@ -49,8 +49,9 @@ public class ListingService implements ServiceListInterface<Listing, String, Lis
     }
 
     @Override
-    public void delete(String id) {
+    public Boolean delete(String id) {
         listingRepository.delete(findOneById(id));
+        return true;
     }
 
     @Override

@@ -39,8 +39,9 @@ public class ImageService implements ServiceListInterface<Image, String, Image, 
     }
 
     @Override
-    public void delete(String id) {
+    public Boolean delete(String id) {
         imageRepository.delete(findOneById(id));
+        return true;
     }
 
 

@@ -1,23 +1,30 @@
 package fr.balijon.centrale.services;
 
 
+import fr.balijon.centrale.entity.Address;
 import fr.balijon.centrale.entity.User;
 import fr.balijon.centrale.entity.dto.UserDTO;
+import fr.balijon.centrale.entity.dto.UserUpdateDTO;
 import fr.balijon.centrale.repository.UserRepository;
 import fr.balijon.centrale.services.interfaces.ServiceListInterface;
+import fr.balijon.centrale.exception.ActivationCodeException;
+
 import jakarta.persistence.EntityNotFoundException;
+
 import lombok.AllArgsConstructor;
 
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
-public class UserService implements ServiceListInterface<User, String, UserDTO, UserDTO> {
+public class UserService implements ServiceListInterface<User, String, UserDTO, UserUpdateDTO> {
 
     public UserRepository userRepository;
+    public AddressService addressService;
 
     @Override
     public List<User> list() {
@@ -27,42 +34,62 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
     @Override
     public User create(UserDTO o) {
         User user = new User();
-        user.setFavorites(o.getFavorites());
-        user.setListings(o.getListings());
-        user.setPassword(o.getPassword());
         user.setRoles("[\"ROLE_USER\"]");
-        user.setEmail(o.getEmail());
-        user.setPhone(o.getPhone());
-        user.setActivationCode(null);
-        user.setPhoto(o.getPhoto());
-        user.setSiret(o.getSiret());
-        user.setBirthAt(o.getBirthAt());
         user.setCreatedAt(LocalDateTime.now());
-        return userRepository.saveAndFlush(user);
-    }
-
-    @Override
-    public User update(UserDTO o, String id) {
-        User user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        user.setFavorites(o.getFavorites());
-        user.setListings(o.getListings());
+        user.setActivationCode(UUID.randomUUID().toString());
+        user.setPhone(o.getPhone());
         user.setPassword(o.getPassword());
         user.setEmail(o.getEmail());
-        user.setPhone(o.getPhone());
+        user.setBirthAt(o.getBirthAt());
+        // Send mail ?
+        return userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    public User update(UserUpdateDTO o, String id) {
+        User user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         user.setPhoto(o.getPhoto());
         user.setSiret(o.getSiret());
+        user.setPhone(o.getPhone());
         user.setBirthAt(o.getBirthAt());
         return userRepository.saveAndFlush(user);
     }
 
     @Override
-    public void delete(String id) {
-        userRepository.delete(findOneById(id));
+    public Boolean delete(String id) {
+        try {
+            User user = findOneById(id);
+            user.setPhone(null);
+            user.setBirthAt(null);
+            user.setPhoto(null);
+            user.setSiret(null);
+            user.setEmail("Utilisateur supprimé");
+
+            // call service ?
+            Address address = user.getAddress();
+            if (address!= null) {
+                address.setUser(null);
+                addressService.update(address,address.getId());
+            }
+            userRepository.saveAndFlush(user);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 
     @Override
     public User findOneById(String id) {
         return  userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+
+    public User activate(String code) {
+        // Activation code from email
+        User user = userRepository.findUserByActivationCode(code)
+                .orElseThrow(ActivationCodeException::new);
+        user.setActivationCode(null);
+        return userRepository.saveAndFlush(user);
+
     }
 }

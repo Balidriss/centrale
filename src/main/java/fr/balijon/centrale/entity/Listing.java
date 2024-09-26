@@ -1,4 +1,6 @@
 package fr.balijon.centrale.entity;
+import com.fasterxml.jackson.annotation.JsonView;
+import fr.balijon.centrale.jsonviews.JsonViews;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -15,15 +17,19 @@ public class Listing {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @JsonView(JsonViews.UserShow.class)
     private String uuid;
 
     @Column(nullable = false)
+    @JsonView(JsonViews.UserShow.class)
     private Long price;
 
     @Column(nullable = false)
+    @JsonView(JsonViews.UserShow.class)
     private Long mileage;
 
     @Column(nullable = false)
+    @JsonView(JsonViews.UserShow.class)
     private LocalDateTime producedAt;
 
     @Column(nullable = false)
@@ -33,6 +39,7 @@ public class Listing {
     private String description;
 
     @Column(nullable = false)
+    @JsonView(JsonViews.UserShow.class)
     private String title;
 
     //relations

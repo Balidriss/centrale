@@ -1,5 +1,7 @@
 package fr.balijon.centrale.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import fr.balijon.centrale.jsonviews.JsonViews;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -16,6 +18,7 @@ public class Image {
     private String uuid;
 
     @Column(nullable = false, columnDefinition = "text")
+    @JsonView(JsonViews.UserShow.class)
     private String path;
 
 

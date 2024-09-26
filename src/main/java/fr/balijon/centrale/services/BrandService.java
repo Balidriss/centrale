@@ -38,8 +38,9 @@ public class BrandService implements ServiceListInterface<Brand, Long, Brand, Br
     }
 
     @Override
-    public void delete(Long id) {
+    public Boolean delete(Long id) {
         brandRepository.delete(findOneById(id));
+        return true;
     }
 
 

@@ -40,8 +40,9 @@ public class FuelService implements ServiceListInterface<Fuel, Long, Fuel, Fuel>
     }
 
     @Override
-    public void delete(Long id) {
+    public Boolean delete(Long id) {
         fuelRepository.delete(findOneById(id));
+        return true;
     }
 
 

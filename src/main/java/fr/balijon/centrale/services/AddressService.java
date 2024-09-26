@@ -53,8 +53,9 @@ public class AddressService implements ServiceListInterface<Address, Long, Addre
     }
 
     @Override
-    public void delete(Long id) {
+    public Boolean delete(Long id) {
         addressRepository.delete(findOneById(id));
+        return true;
     }
 
 

@@ -40,8 +40,9 @@ public class ModelService implements ServiceListInterface<Model, Long, Model, Mo
     }
 
     @Override
-    public void delete(Long id) {
+    public Boolean delete(Long id) {
         modelRepository.delete(findOneById(id));
+        return true;
     }
 
 
