@@ -5,5 +5,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ActivationCodeException extends RuntimeException {
 
-    //TODO
+    public ActivationCodeException(String message) {
+        super(message);
+    }
 }

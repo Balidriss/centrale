@@ -5,6 +5,7 @@ import fr.balijon.centrale.entity.Address;
 import fr.balijon.centrale.entity.User;
 import fr.balijon.centrale.entity.dto.UserDTO;
 import fr.balijon.centrale.entity.dto.UserUpdateDTO;
+import fr.balijon.centrale.exception.ExpiredCodeException;
 import fr.balijon.centrale.repository.UserRepository;
 import fr.balijon.centrale.services.interfaces.ServiceListInterface;
 import fr.balijon.centrale.exception.ActivationCodeException;
@@ -42,6 +43,7 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
         user.setPassword(o.getPassword());
         user.setEmail(o.getEmail());
         user.setBirthAt(o.getBirthAt());
+        user.setActivationCodeSentAt(LocalDateTime.now());
         // Send mail ?
         return userRepository.saveAndFlush(user);
     }
@@ -65,7 +67,8 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
             user.setPhoto(null);
             user.setSiret(null);
             user.setEmail("Utilisateur supprimé");
-
+            user.setActivationCodeSentAt(null);
+            user.setActivationCode(null);
             // call service ?
             Address address = user.getAddress();
             if (address!= null) {
@@ -90,8 +93,8 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
                 .orElseThrow(ActivationCodeException::new);
 
         LocalDateTime current = LocalDateTime.now();
-        if (current.isAfter(user.getActivationCodeSentAt().plusMinutes(15))) {
-            throw new TimeoutException("La durée du code a expiré");
+        if (current.isAfter(user.getActivationCodeSentAt().plusMinutes(2))) {
+            throw new ExpiredCodeException("La durée du code a expiré");
         }
         user.setActivationCode(null);
         user.setActivationCodeSentAt(null);
