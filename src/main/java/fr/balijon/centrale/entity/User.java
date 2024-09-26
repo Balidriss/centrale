@@ -60,9 +60,11 @@ public class User {
     private Address address;
 
     @OneToMany(mappedBy = "owner")
+    @JsonView(JsonViews.UserShow.class)
     private List<Listing> listings = new ArrayList<Listing>();
 
     @OneToMany(mappedBy = "user")
+    @JsonView(JsonViews.UserShow.class)
     private List<Favorite> favorites = new ArrayList<Favorite>();
 
     ////
@@ -71,6 +73,12 @@ public class User {
     public Boolean isActive()
     {
         return activationCode == null;
+    }
+
+    @JsonView(JsonViews.UserMinimalView.class)
+    private Boolean isAdmin()
+    {
+        return roles.contains("ROLE_ADMIN");
     }
 
 }

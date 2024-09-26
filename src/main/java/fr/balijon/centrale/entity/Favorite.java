@@ -1,5 +1,7 @@
 package fr.balijon.centrale.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import fr.balijon.centrale.jsonviews.JsonViews;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -18,6 +20,7 @@ public class Favorite {
     private Long id;
 
     @Column(nullable = false)
+    @JsonView(JsonViews.UserShow.class)
     private LocalDateTime createdAt;
 
     @ManyToOne
@@ -26,5 +29,6 @@ public class Favorite {
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonView(JsonViews.UserShow.class)
     private Listing listing;
 }

@@ -21,10 +21,12 @@ public class FavoriteController {
         return favoriteService.create(favorite);
     }
 
-   @DeleteMapping(name="delete")
-    public Boolean delete(@RequestParam String userUuid, @RequestParam String listingUuid)
-   {
+//   @DeleteMapping(name="delete")
+//    public Boolean delete(@RequestParam String userUuid, @RequestParam String listingUuid)
+//   {
+//
+//       return favoriteService.delete(userUuid, listingUuid);
+//   }
 
-       return favoriteService.delete(userUuid, listingUuid);
-   }
+
 }
