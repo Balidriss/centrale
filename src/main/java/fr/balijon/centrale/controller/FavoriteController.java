@@ -1,5 +1,6 @@
 package fr.balijon.centrale.controller;
 
+import fr.balijon.centrale.embedded.UserListingId;
 import fr.balijon.centrale.entity.Favorite;
 import fr.balijon.centrale.entity.dto.FavoriteDTO;
 import fr.balijon.centrale.services.FavoriteService;
@@ -16,16 +17,12 @@ public class FavoriteController {
 
     private FavoriteService favoriteService;
 
-    @PostMapping(name = "create")
-    public Favorite create(@Valid @RequestBody FavoriteDTO favorite)
+    @PostMapping(name = "switch")
+    public Boolean create(@Valid @RequestBody UserListingId favorite)
     {
-        return favoriteService.create(favorite);
+        return favoriteService.switchFavorite(favorite);
     }
 
-    @DeleteMapping("/{id}")
-    public boolean delete(@PathVariable Long id) {
-        return favoriteService.delete(id);
-    }
 
 //   @DeleteMapping(name="delete")
 //    public Boolean delete(@RequestParam String userUuid, @RequestParam String listingUuid)

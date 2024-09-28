@@ -1,6 +1,7 @@
 package fr.balijon.centrale.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import fr.balijon.centrale.embedded.UserListingId;
 import fr.balijon.centrale.jsonviews.JsonViews;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,20 +16,19 @@ import java.time.LocalDateTime;
 @Data
 public class Favorite {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    private UserListingId id;
 
     @Column(nullable = false)
     @JsonView(JsonViews.UserShow.class)
     private LocalDateTime createdAt;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "user_uuid", insertable = false, updatable = false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "listing_uuid", insertable = false, updatable = false)
     @JsonView(JsonViews.UserShow.class)
     private Listing listing;
 }
