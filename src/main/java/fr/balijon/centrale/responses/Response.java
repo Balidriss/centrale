@@ -1,17 +1,31 @@
 package fr.balijon.centrale.responses;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@AllArgsConstructor
+
+
+
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
-@Data
 public class Response {
 
-    private int status;
+    private int status = 999;
 
-    private String field;
+    private String message = "Interessant...";
 
+    private Object object = null;
+
+    public Response(int status, String message)
+    {
+        this.status = status;
+        this.message = message;
+    }
+    public Response(int status, String message, Object object)
+    {
+        this(status,message);
+        this.object = object;
+    }
 
 }

@@ -1,4 +1,4 @@
-package fr.balijon.centrale.exception;
+package fr.balijon.centrale.exception.entity.user;
 
 import lombok.NoArgsConstructor;
 

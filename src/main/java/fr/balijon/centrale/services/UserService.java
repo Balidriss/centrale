@@ -5,10 +5,10 @@ import fr.balijon.centrale.entity.Address;
 import fr.balijon.centrale.entity.User;
 import fr.balijon.centrale.entity.dto.UserDTO;
 import fr.balijon.centrale.entity.dto.UserUpdateDTO;
-import fr.balijon.centrale.exception.ExpiredCodeException;
+import fr.balijon.centrale.exception.entity.EntityException;
 import fr.balijon.centrale.repository.UserRepository;
 import fr.balijon.centrale.services.interfaces.ServiceListInterface;
-import fr.balijon.centrale.exception.ActivationCodeException;
+import fr.balijon.centrale.exception.entity.user.ActivationCodeException;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -50,7 +50,7 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
 
     @Override
     public User update(UserUpdateDTO o, String id) {
-        User user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        User user = userRepository.findById(id).orElseThrow( () -> new EntityException("User n'est pas trouvé avec id : " + id,o));
         user.setPhoto(o.getPhoto());
         user.setSiret(o.getSiret());
         user.setPhone(o.getPhone());
@@ -60,8 +60,8 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
 
     @Override
     public Boolean delete(String id) {
-        try {
-            User user = findOneById(id);
+
+            User user = userRepository.findById(id).orElseThrow( () -> new EntityException("User n'est pas trouvé avec id : " + id));
             user.setPhone(null);
             user.setBirthAt(null);
             user.setPhoto(null);
@@ -77,24 +77,22 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
             }
             userRepository.saveAndFlush(user);
             return true;
-        } catch (Exception e) {
-            return false;
-        }
     }
 
 
     @Override
     public User findOneById(String id) {
-        return  userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        return  userRepository.findById(id).orElseThrow( () -> new EntityException("User n'est pas trouvé avec id : " + id));
     }
 
     public User activate(String code)  throws TimeoutException {
         User user = userRepository.findUserByActivationCode(code)
-                .orElseThrow(ActivationCodeException::new);
+                .orElseThrow(() -> new ActivationCodeException("Code d'activation erroné"));
 
         LocalDateTime current = LocalDateTime.now();
+        //2 minutes for test
         if (current.isAfter(user.getActivationCodeSentAt().plusMinutes(2))) {
-            throw new ExpiredCodeException("La durée du code a expiré");
+            throw new ActivationCodeException("La durée du code d'activation a expiré");
         }
         user.setActivationCode(null);
         user.setActivationCodeSentAt(null);
