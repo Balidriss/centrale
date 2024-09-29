@@ -2,6 +2,7 @@ package fr.balijon.centrale.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import fr.balijon.centrale.entity.User;
+import fr.balijon.centrale.entity.dto.LoginRequest;
 import fr.balijon.centrale.entity.dto.UserDTO;
 import fr.balijon.centrale.entity.dto.UserUpdateDTO;
 import fr.balijon.centrale.jsonviews.JsonViews;
@@ -51,6 +52,11 @@ public class UserController {
     @DeleteMapping("/{uuid}")
     public Boolean delete(@PathVariable String uuid) {
         return userService.delete(uuid);
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody LoginRequest loginRequest) {
+        return userService.login(loginRequest);
     }
 
 

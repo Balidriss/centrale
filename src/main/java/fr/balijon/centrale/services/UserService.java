@@ -3,14 +3,13 @@ package fr.balijon.centrale.services;
 
 import fr.balijon.centrale.entity.Address;
 import fr.balijon.centrale.entity.User;
+import fr.balijon.centrale.entity.dto.LoginRequest;
 import fr.balijon.centrale.entity.dto.UserDTO;
 import fr.balijon.centrale.entity.dto.UserUpdateDTO;
 import fr.balijon.centrale.exception.entity.EntityException;
 import fr.balijon.centrale.repository.UserRepository;
 import fr.balijon.centrale.services.interfaces.ServiceListInterface;
 import fr.balijon.centrale.exception.entity.user.ActivationCodeException;
-
-import jakarta.persistence.EntityNotFoundException;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -19,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.TimeoutException;
 
@@ -99,4 +99,13 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
         user.setActivationCode(null);
         user.setActivationCodeSentAt(null);
         return userRepository.saveAndFlush(user);
-}}
+}
+
+    public String login(LoginRequest loginRequest) {
+
+        String email = loginRequest.getEmail();
+        String password = loginRequest.getPassword();
+        User user = userRepository.findByEmailAndPassword(email,password).orElseThrow(() -> new EntityException("User n'existe pas !"));
+        return user.getUuid();
+    }
+}
