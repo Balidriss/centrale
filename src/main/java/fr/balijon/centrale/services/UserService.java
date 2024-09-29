@@ -12,6 +12,7 @@ import fr.balijon.centrale.exception.entity.user.ActivationCodeException;
 
 import jakarta.persistence.EntityNotFoundException;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -34,22 +35,23 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
     }
 
     @Override
-    public User create(UserDTO o) {
-        User user = new User();
-        user.setRoles("[\"ROLE_USER\"]");
-        user.setCreatedAt(LocalDateTime.now());
-        user.setActivationCode(UUID.randomUUID().toString());
-        user.setPhone(o.getPhone());
-        user.setPassword(o.getPassword());
-        user.setEmail(o.getEmail());
-        user.setBirthAt(o.getBirthAt());
-        user.setActivationCodeSentAt(LocalDateTime.now());
-        // Send mail ?
-        return userRepository.saveAndFlush(user);
+    public User create(@Valid UserDTO o) {
+            User user = new User();
+            user.setRoles("[\"ROLE_USER\"]");
+            user.setCreatedAt(LocalDateTime.now());
+            user.setActivationCode(UUID.randomUUID().toString());
+            user.setPhone(o.getPhone());
+            user.setPassword(o.getPassword());
+            user.setEmail(o.getEmail());
+            user.setBirthAt(o.getBirthAt());
+            user.setActivationCodeSentAt(LocalDateTime.now());
+            // Send mail ?
+            return userRepository.saveAndFlush(user);
+
     }
 
     @Override
-    public User update(UserUpdateDTO o, String id) {
+    public User update(@Valid UserUpdateDTO o, String id) {
         User user = userRepository.findById(id).orElseThrow( () -> new EntityException("User n'est pas trouvé avec id : " + id,o));
         user.setPhoto(o.getPhoto());
         user.setSiret(o.getSiret());
