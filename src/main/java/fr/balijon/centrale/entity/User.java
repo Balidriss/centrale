@@ -39,9 +39,7 @@ public class User implements UserDetails {
     @JsonView(JsonViews.UserShow.class)
     private LocalDate birthAt;
 
-    @Column(nullable = false)
-    @ManyToMany
-    private List<Role> roles = new ArrayList<>();
+
 
     @Column(nullable = false)
     @JsonView(JsonViews.UserShow.class)
@@ -58,6 +56,9 @@ public class User implements UserDetails {
     private String siret = null;
 
     //relations
+
+    @ManyToMany
+    private List<Role> roles = new ArrayList<>();
 
     @OneToOne(mappedBy = "user")
     @JsonView(JsonViews.UserShow.class)

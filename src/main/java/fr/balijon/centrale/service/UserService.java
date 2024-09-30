@@ -45,7 +45,9 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
     public User create(@Valid UserDTO o) {
             User user = new User();
             List<Role> roles = new ArrayList<Role>();
-            roles.add((roleService.findOneByLabel("Role_USER")));
+            Role roleUser = roleService.findOneByLabel("ROLE_USER");
+            System.out.println(roleUser);
+            roles.add(roleUser);
             user.setRoles(roles);
             user.setCreatedAt(LocalDateTime.now());
             user.setActivationCode(UUID.randomUUID().toString());
