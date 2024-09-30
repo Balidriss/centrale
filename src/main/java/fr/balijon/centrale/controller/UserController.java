@@ -9,6 +9,7 @@ import fr.balijon.centrale.jsonviews.JsonViews;
 import fr.balijon.centrale.services.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -55,11 +56,13 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginRequest loginRequest) {
-        return userService.login(loginRequest);
+    public ResponseEntity<Object> login(@Valid @RequestBody LoginRequest loginRequest) {
+        String id = userService.login(loginRequest);
+
+        return ResponseEntity.ok(new Object() {
+            public String uuid = id;
+        });
+
+
     }
-
-
-
-
 }
