@@ -1,13 +1,9 @@
-package fr.balijon.centrale.services;
+package fr.balijon.centrale.service;
 
 
 import fr.balijon.centrale.embedded.UserListingId;
 import fr.balijon.centrale.entity.Favorite;
-import fr.balijon.centrale.entity.User;
-import fr.balijon.centrale.entity.dto.FavoriteDTO;
 import fr.balijon.centrale.repository.FavoriteRepository;
-import fr.balijon.centrale.services.interfaces.BasicServiceInterface;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

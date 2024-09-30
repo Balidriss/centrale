@@ -1,7 +1,7 @@
 package fr.balijon.centrale.controller;
 
 import fr.balijon.centrale.entity.Listing;
-import fr.balijon.centrale.services.ListingService;
+import fr.balijon.centrale.service.ListingService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

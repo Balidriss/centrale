@@ -2,7 +2,7 @@ package fr.balijon.centrale.controller;
 
 import fr.balijon.centrale.entity.Image;
 
-import fr.balijon.centrale.services.ImageService;
+import fr.balijon.centrale.service.ImageService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,7 +1,7 @@
 package fr.balijon.centrale.controller;
 
 import fr.balijon.centrale.entity.Address;
-import fr.balijon.centrale.services.AddressService;
+import fr.balijon.centrale.service.AddressService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

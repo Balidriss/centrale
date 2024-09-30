@@ -1,4 +1,4 @@
-package fr.balijon.centrale.services.interfaces;
+package fr.balijon.centrale.service.interfaces;
 
 import java.util.List;
 

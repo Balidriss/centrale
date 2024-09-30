@@ -1,4 +1,4 @@
-package fr.balijon.centrale.services.interfaces;
+package fr.balijon.centrale.service.interfaces;
 
 public interface BasicServiceInterface<T, L, C> {
 

@@ -1,9 +1,9 @@
-package fr.balijon.centrale.services;
+package fr.balijon.centrale.service;
 
 
 import fr.balijon.centrale.entity.Model;
 import fr.balijon.centrale.repository.ModelRepository;
-import fr.balijon.centrale.services.interfaces.ServiceListInterface;
+import fr.balijon.centrale.service.interfaces.ServiceListInterface;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package fr.balijon.centrale.controller;
 
 import fr.balijon.centrale.entity.Fuel;
-import fr.balijon.centrale.services.FuelService;
+import fr.balijon.centrale.service.FuelService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

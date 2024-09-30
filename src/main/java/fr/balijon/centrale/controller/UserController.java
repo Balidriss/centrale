@@ -6,13 +6,12 @@ import fr.balijon.centrale.entity.dto.LoginRequest;
 import fr.balijon.centrale.entity.dto.UserDTO;
 import fr.balijon.centrale.entity.dto.UserUpdateDTO;
 import fr.balijon.centrale.jsonviews.JsonViews;
-import fr.balijon.centrale.services.UserService;
+import fr.balijon.centrale.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.concurrent.TimeoutException;
 
 @RestController
@@ -21,11 +20,6 @@ import java.util.concurrent.TimeoutException;
 public class UserController {
     private UserService userService;
 
-    @PostMapping
-    @JsonView(JsonViews.UserShow.class)
-    public User create(@Valid @RequestBody UserDTO dto) {
-        return userService.create(dto);
-    }
 
     @PutMapping("/{uuid}")
     @JsonView(JsonViews.UserShow.class)
@@ -55,14 +49,6 @@ public class UserController {
         return userService.delete(uuid);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<Object> login(@Valid @RequestBody LoginRequest loginRequest) {
-        String id = userService.login(loginRequest);
 
-        return ResponseEntity.ok(new Object() {
-            public String uuid = id;
-        });
-
-
-    }
 }
+

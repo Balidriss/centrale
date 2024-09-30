@@ -1,14 +1,10 @@
 package fr.balijon.centrale.controller;
 
 import fr.balijon.centrale.embedded.UserListingId;
-import fr.balijon.centrale.entity.Favorite;
-import fr.balijon.centrale.entity.dto.FavoriteDTO;
-import fr.balijon.centrale.services.FavoriteService;
+import fr.balijon.centrale.service.FavoriteService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @AllArgsConstructor

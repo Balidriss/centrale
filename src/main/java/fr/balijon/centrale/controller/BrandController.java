@@ -1,7 +1,7 @@
 package fr.balijon.centrale.controller;
 
 import fr.balijon.centrale.entity.Brand;
-import fr.balijon.centrale.services.BrandService;
+import fr.balijon.centrale.service.BrandService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

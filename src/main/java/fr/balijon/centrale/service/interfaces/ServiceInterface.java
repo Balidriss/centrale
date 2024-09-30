@@ -1,4 +1,4 @@
-package fr.balijon.centrale.services.interfaces;
+package fr.balijon.centrale.service.interfaces;
 
 public interface ServiceInterface<T, L, C, U> extends BasicServiceInterface<T, L, C> {
 

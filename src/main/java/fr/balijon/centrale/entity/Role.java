@@ -11,7 +11,7 @@ import lombok.Data;
 @Entity
 @Data
 public class Role {
-
+//create roles in db => ROLE_USER & ROLE_ADMIN
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

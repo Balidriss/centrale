@@ -40,7 +40,8 @@ public class User implements UserDetails {
     private LocalDate birthAt;
 
     @Column(nullable = false)
-    private String roles;
+    @ManyToMany
+    private List<Role> roles = new ArrayList<>();
 
     @Column(nullable = false)
     @JsonView(JsonViews.UserShow.class)
@@ -81,12 +82,12 @@ public class User implements UserDetails {
     @JsonView(JsonViews.UserMinimalView.class)
     private boolean isAdmin()
     {
-        return roles.contains("ROLE_ADMIN");
+        return roles.stream().anyMatch(role -> "ROLE_ADMIN".equals(role.getLabel()));
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return null;
     }
 
     @Override

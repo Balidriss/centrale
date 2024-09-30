@@ -1,7 +1,7 @@
 package fr.balijon.centrale.controller;
 
 import fr.balijon.centrale.entity.Model;
-import fr.balijon.centrale.services.ModelService;
+import fr.balijon.centrale.service.ModelService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

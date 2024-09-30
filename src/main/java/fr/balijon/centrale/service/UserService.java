@@ -1,32 +1,40 @@
-package fr.balijon.centrale.services;
+package fr.balijon.centrale.service;
 
 
 import fr.balijon.centrale.entity.Address;
+import fr.balijon.centrale.entity.Role;
 import fr.balijon.centrale.entity.User;
 import fr.balijon.centrale.entity.dto.LoginRequest;
 import fr.balijon.centrale.entity.dto.UserDTO;
 import fr.balijon.centrale.entity.dto.UserUpdateDTO;
 import fr.balijon.centrale.exception.entity.EntityException;
 import fr.balijon.centrale.repository.UserRepository;
-import fr.balijon.centrale.services.interfaces.ServiceListInterface;
+import fr.balijon.centrale.service.interfaces.ServiceListInterface;
 import fr.balijon.centrale.exception.entity.user.ActivationCodeException;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.TimeoutException;
 
 @Service
 @AllArgsConstructor
-public class UserService implements ServiceListInterface<User, String, UserDTO, UserUpdateDTO> {
+public class UserService implements ServiceListInterface<User, String, UserDTO, UserUpdateDTO>, UserDetailsService {
 
     public UserRepository userRepository;
+    public RoleService roleService;
     public AddressService addressService;
+    public PasswordEncoder passwordEncoder;
 
     @Override
     public List<User> list() {
@@ -36,11 +44,13 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
     @Override
     public User create(@Valid UserDTO o) {
             User user = new User();
-            user.setRoles("[\"ROLE_USER\"]");
+            List<Role> roles = new ArrayList<Role>();
+            roles.add((roleService.findOneByLabel("Role_USER")));
+            user.setRoles(roles);
             user.setCreatedAt(LocalDateTime.now());
             user.setActivationCode(UUID.randomUUID().toString());
             user.setPhone(o.getPhone());
-            user.setPassword(o.getPassword());
+            user.setPassword(passwordEncoder.encode(o.getPassword()));
             user.setEmail(o.getEmail());
             user.setBirthAt(o.getBirthAt());
             user.setActivationCodeSentAt(LocalDateTime.now());
@@ -100,11 +110,17 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
         return userRepository.saveAndFlush(user);
 }
 
-    public String login(LoginRequest loginRequest) {
 
-        String email = loginRequest.getEmail();
-        String password = loginRequest.getPassword();
-        User user = userRepository.findByEmailAndPassword(email,password).orElseThrow(() -> new EntityException("User n'existe pas !"));
-        return user.getUuid();
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByEmailAndActivationCodeIsNull(username).orElseThrow(()-> new UsernameNotFoundException("User n'existe pas"));
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), userGrantedAuthority(user.getRoles()));
+    }
+
+    private Collection<? extends GrantedAuthority> userGrantedAuthority(List<Role> roles) {
+    List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+    roles.forEach(r -> authorities.add(new SimpleGrantedAuthority(r.getLabel())));
+
+    return authorities;
     }
 }
