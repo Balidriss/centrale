@@ -3,6 +3,7 @@ package fr.balijon.centrale.configuration.security;
 import fr.balijon.centrale.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -37,11 +38,12 @@ public class SecurityConfig {
                                         .requestMatchers("/api/login", "/api/register").permitAll()
                                         .requestMatchers(
                                                 AntPathRequestMatcher.antMatcher("/v3/api-docs/**"),
-                                                AntPathRequestMatcher.antMatcher("/swagger-ui/**")
+                                                AntPathRequestMatcher.antMatcher("/swagger-ui/**"),
+                                                AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/api/listing/**"),
+                                                AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/api/user/activate/**")
                                         ).permitAll()
                                         .requestMatchers(
-                                                AntPathRequestMatcher.antMatcher("/api/user/**"),
-                                                AntPathRequestMatcher.antMatcher("/api/listing/**")
+                                                AntPathRequestMatcher.antMatcher("/api/user/**")
                                         ).authenticated()
                                         .requestMatchers(AntPathRequestMatcher.antMatcher("/api/**")).hasAnyAuthority("ADMIN", "SUPER_ADMIN")
                             .requestMatchers(AntPathRequestMatcher.antMatcher("/admin/**")).hasAuthority("ADMIN")

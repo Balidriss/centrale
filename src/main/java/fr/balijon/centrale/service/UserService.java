@@ -4,7 +4,7 @@ package fr.balijon.centrale.service;
 import fr.balijon.centrale.entity.Address;
 import fr.balijon.centrale.entity.Role;
 import fr.balijon.centrale.entity.User;
-import fr.balijon.centrale.entity.dto.LoginRequest;
+
 import fr.balijon.centrale.entity.dto.UserDTO;
 import fr.balijon.centrale.entity.dto.UserUpdateDTO;
 import fr.balijon.centrale.exception.entity.EntityException;
@@ -46,7 +46,6 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
             User user = new User();
             List<Role> roles = new ArrayList<Role>();
             Role roleUser = roleService.findOneByLabel("ROLE_USER");
-            System.out.println(roleUser);
             roles.add(roleUser);
             user.setRoles(roles);
             user.setCreatedAt(LocalDateTime.now());
@@ -122,7 +121,6 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
     private Collection<? extends GrantedAuthority> userGrantedAuthority(List<Role> roles) {
     List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
     roles.forEach(r -> authorities.add(new SimpleGrantedAuthority(r.getLabel())));
-
     return authorities;
     }
 }
