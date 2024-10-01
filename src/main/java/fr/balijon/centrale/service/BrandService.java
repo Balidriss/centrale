@@ -44,6 +44,7 @@ public class BrandService implements ServiceListInterface<Brand, Long, BrandDTO,
         Brand brand = brandRepository.findById(id).orElseThrow( () -> new EntityException("Brand n'est pas trouvé avec id : " + id));
         brand.setModels(new ArrayList<Model>());
         brand.setName("Cette marque n'éxiste plus");
+        brandRepository.save(brand);
         return true;
     }
 

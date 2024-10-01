@@ -42,4 +42,9 @@ public class BrandController {
     {
         return brandService.update(brand, id);
     }
+
+    @DeleteMapping(value = "/{id}", name = "delete")
+    public Boolean delete(@PathVariable Long id) {
+        return brandService.delete(id);
+    }
 }

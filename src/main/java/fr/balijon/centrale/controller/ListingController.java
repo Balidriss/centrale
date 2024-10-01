@@ -46,4 +46,8 @@ public class ListingController {
     {
         return listingService.update(listing, id);
     }
+    @DeleteMapping(value = "/{uuid}", name = "delete")
+    public Boolean delete(@PathVariable String uuid) {
+        return listingService.delete(uuid);
+    }
 }

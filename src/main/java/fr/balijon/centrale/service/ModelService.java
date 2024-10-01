@@ -1,6 +1,7 @@
 package fr.balijon.centrale.service;
 
 
+import fr.balijon.centrale.entity.Brand;
 import fr.balijon.centrale.entity.Model;
 import fr.balijon.centrale.entity.dto.ModelDTO;
 import fr.balijon.centrale.entity.dto.ModelUpdateDTO;
@@ -20,6 +21,7 @@ public class ModelService implements ServiceListInterface<Model, Long, ModelDTO,
 
     public ModelRepository modelRepository;
     public BrandService brandService;
+    public BrandRepository brandRepository;
 
     @Override
     public List<Model> list() {
@@ -44,9 +46,13 @@ public class ModelService implements ServiceListInterface<Model, Long, ModelDTO,
     @Override
     public Boolean delete(Long id) {
         Model model = modelRepository.findById(id).orElseThrow( () -> new EntityException("Model n'est pas trouvé avec id : " + id));
-        model.setBrand(null);
         model.setName("Ce Modele n'éxiste plus");
-        model.setBrand(null);
+//        if(model.getBrand() != null) {
+//            Brand brand = model.getBrand();
+//            brand.getModels().forEach(m -> m.setBrand(null));
+//            brandRepository.save(brand);
+//        }
+        modelRepository.save(model);
         return true;
     }
 

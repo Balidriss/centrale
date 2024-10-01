@@ -42,4 +42,9 @@ public class FuelController {
     {
         return fuelService.update(fuel, id);
     }
+
+    @DeleteMapping(value = "/{id}", name = "delete")
+    public Boolean delete(@PathVariable Long id) {
+        return fuelService.delete(id);
+    }
 }

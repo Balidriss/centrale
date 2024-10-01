@@ -21,6 +21,9 @@ public class ImageController {
     {
         return imageService.create(image);
     }
-
+    @DeleteMapping(value = "/{uuid}", name = "delete")
+    public Boolean delete(@PathVariable String uuid) {
+        return imageService.delete(uuid);
+    }
 
 }

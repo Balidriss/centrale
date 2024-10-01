@@ -14,18 +14,9 @@ public class FavoriteController {
     private FavoriteService favoriteService;
 
     @PostMapping(name = "switch")
-    public Boolean create(@Valid @RequestBody UserListingId favorite)
+    public Boolean handle(@Valid @RequestBody UserListingId favorite)
     {
         return favoriteService.switchFavorite(favorite);
     }
-
-
-//   @DeleteMapping(name="delete")
-//    public Boolean delete(@RequestParam String userUuid, @RequestParam String listingUuid)
-//   {
-//
-//       return favoriteService.delete(userUuid, listingUuid);
-//   }
-
 
 }

@@ -21,13 +21,13 @@ public class UserController {
     private UserService userService;
 
 
-    @PutMapping("/{uuid}")
+    @PutMapping(value ="/{uuid}", name="update")
     @JsonView(JsonViews.UserShow.class)
     public User update(@Valid @RequestBody UserUpdateDTO dto, @PathVariable String uuid) {
         return userService.update(dto, uuid);
     }
 
-    @GetMapping("/activate/{code}")
+    @GetMapping(value ="/activate/{code}", name="activate")
     @JsonView(JsonViews.UserShow.class)
     public User activate(@PathVariable String code) throws TimeoutException {
         return userService.activate(code);
@@ -44,7 +44,7 @@ public class UserController {
         return userService.findOneById(uuid);
     }
 
-    @DeleteMapping("/{uuid}")
+    @DeleteMapping(value = "/{uuid}", name="delete")
     public Boolean delete(@PathVariable String uuid) {
         return userService.delete(uuid);
     }

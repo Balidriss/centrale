@@ -11,6 +11,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,9 +44,9 @@ public class FuelService implements ServiceListInterface<Fuel, Long, FuelDTO, Fu
     @Override
     public Boolean delete(Long id) {
         Fuel fuel = fuelRepository.findById(id).orElseThrow(() -> new EntityException("FUel n'est pas trouvé avec id : " + id));
-        fuel.setLogo(null);
         fuel.setType("fuel n'éxiste plus");
-        fuel.setListings(null);
+        fuel.setListings(new ArrayList<Listing>());
+        fuelRepository.save(fuel);
         return true;
     }
 

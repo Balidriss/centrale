@@ -17,12 +17,6 @@ public class AddressController {
 
     private AddressService addressService;
 
-    @GetMapping(name = "list")
-    public List<Address> list()
-    {
-        return addressService.list();
-    }
-
     @GetMapping(value = "/{id}", name = "show")
     public Address show(@PathVariable Long id)
     {
@@ -42,4 +36,10 @@ public class AddressController {
     {
         return addressService.update(address, id);
     }
+
+    @DeleteMapping(value = "/{id}", name = "delete")
+    public Boolean delete(@PathVariable Long id) {
+        return addressService.delete(id);
+    }
+
 }

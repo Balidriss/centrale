@@ -87,8 +87,9 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
             user.setActivationCodeSentAt(null);
             user.setActivationCode(null);
             // call service ?
-            Address address = user.getAddress();
-            if (address!= null) {
+
+            if (user.getAddress() != null) {
+                Address address = user.getAddress();
                 address.setUser(null);
                 addressRepository.save(address);
             }
@@ -107,8 +108,7 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
                 .orElseThrow(() -> new ActivationCodeException("Code d'activation erroné"));
 
         LocalDateTime current = LocalDateTime.now();
-        //2 minutes for test
-        if (current.isAfter(user.getActivationCodeSentAt().plusMinutes(2))) {
+        if (current.isAfter(user.getActivationCodeSentAt().plusMinutes(60))) {
             throw new ActivationCodeException("La durée du code d'activation a expiré");
         }
         user.setActivationCode(null);

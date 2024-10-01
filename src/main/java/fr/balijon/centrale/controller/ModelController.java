@@ -44,4 +44,9 @@ public class ModelController {
     {
         return modelService.update(model, id);
     }
+
+    @DeleteMapping(value = "/{id}", name = "delete")
+    public Boolean delete(@PathVariable Long id) {
+        return modelService.delete(id);
+    }
 }
