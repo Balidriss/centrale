@@ -2,10 +2,14 @@ package fr.balijon.centrale.entity.dto;
 
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Getter
+
 @AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class LoginRequest {
 
     @Email
