@@ -1,6 +1,9 @@
 package fr.balijon.centrale.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import fr.balijon.centrale.entity.Fuel;
+import fr.balijon.centrale.entity.dto.FuelDTO;
+import fr.balijon.centrale.jsonviews.JsonViews;
 import fr.balijon.centrale.service.FuelService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +18,7 @@ public class FuelController {
     private FuelService fuelService;
 
     @GetMapping(name = "list")
+    @JsonView(JsonViews.FuelListView.class)
     public List<Fuel> list()
     {
         return fuelService.list();
@@ -28,13 +32,13 @@ public class FuelController {
 
 
     @PostMapping(name = "create")
-    public Fuel create(@RequestBody Fuel fuel)
+    public Fuel create(@RequestBody FuelDTO fuel)
     {
         return fuelService.create(fuel);
     }
 
     @PutMapping(value = "/{id}", name = "update")
-    public Fuel update(@PathVariable Long id, @RequestBody Fuel fuel)
+    public Fuel update(@PathVariable Long id, @RequestBody FuelDTO fuel)
     {
         return fuelService.update(fuel, id);
     }

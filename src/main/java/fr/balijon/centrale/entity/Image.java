@@ -18,7 +18,7 @@ public class Image {
     private String uuid;
 
     @Column(nullable = false, columnDefinition = "text")
-    @JsonView(JsonViews.UserShow.class)
+    @JsonView({JsonViews.UserShow.class,JsonViews.ListingListView.class})
     private String path;
 
 

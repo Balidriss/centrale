@@ -35,18 +35,19 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->
                                 auth
-                                        .requestMatchers("/api/login", "/api/register").permitAll()
-                                        .requestMatchers(
-                                                AntPathRequestMatcher.antMatcher("/v3/api-docs/**"),
-                                                AntPathRequestMatcher.antMatcher("/swagger-ui/**"),
-                                                AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/api/listing/**"),
-                                                AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/api/user/activate/**")
-                                        ).permitAll()
-                                        .requestMatchers(
-                                                AntPathRequestMatcher.antMatcher("/api/user/**")
-                                        ).authenticated()
-                                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/**")).hasAnyAuthority("ADMIN", "SUPER_ADMIN")
-                            .requestMatchers(AntPathRequestMatcher.antMatcher("/admin/**")).hasAuthority("ADMIN")
+                                        .requestMatchers("/**").permitAll()
+//                                        .requestMatchers("/api/login", "/api/register").permitAll()
+//                                        .requestMatchers(
+//                                                AntPathRequestMatcher.antMatcher("/v3/api-docs/**"),
+//                                                AntPathRequestMatcher.antMatcher("/swagger-ui/**"),
+//                                                AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/api/listing/**"),
+//                                                AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/api/user/activate/**")
+//                                        ).permitAll()
+//                                        .requestMatchers(
+//                                                AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/api/user/**")
+//                                        ).authenticated()
+//                                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/**")).hasAnyAuthority("ADMIN", "SUPER_ADMIN")
+//                            .requestMatchers(AntPathRequestMatcher.antMatcher("/admin/**")).hasAuthority("ADMIN")
                 );
         return http.build();
     }

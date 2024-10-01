@@ -18,30 +18,31 @@ public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(JsonViews.AddressShow.class)
     private Long id;
 
     @Column(nullable = false)
-    @JsonView(JsonViews.UserShow.class)
+    @JsonView({JsonViews.UserShow.class,JsonViews.ListingShow.class,JsonViews.AddressListView.class})
     private String streetNumber;
 
     @Column(nullable = false)
-    @JsonView(JsonViews.UserShow.class)
+    @JsonView({JsonViews.UserShow.class,JsonViews.ListingShow.class,JsonViews.AddressListView.class})
     private String streetName;
 
     @Column(nullable = false)
-    @JsonView(JsonViews.UserShow.class)
+    @JsonView({JsonViews.UserShow.class,JsonViews.ListingShow.class,JsonViews.AddressListView.class})
     private String zipCode;
 
     @Column(nullable = false)
-    @JsonView(JsonViews.UserShow.class)
+    @JsonView({JsonViews.UserShow.class,JsonViews.ListingListView.class,JsonViews.AddressListView.class})
     private String city;
 
     @Column(nullable = false)
-    @JsonView(JsonViews.UserShow.class)
+    @JsonView({JsonViews.UserShow.class,JsonViews.ListingShow.class,JsonViews.AddressListView.class})
     private Long latitude;
 
     @Column(nullable = false)
-    @JsonView(JsonViews.UserShow.class)
+    @JsonView({JsonViews.UserShow.class,JsonViews.ListingShow.class,JsonViews.AddressListView.class})
     private Long longitude;
 
     @OneToOne

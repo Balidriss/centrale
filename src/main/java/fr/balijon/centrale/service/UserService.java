@@ -8,6 +8,7 @@ import fr.balijon.centrale.entity.User;
 import fr.balijon.centrale.entity.dto.UserDTO;
 import fr.balijon.centrale.entity.dto.UserUpdateDTO;
 import fr.balijon.centrale.exception.entity.EntityException;
+import fr.balijon.centrale.repository.AddressRepository;
 import fr.balijon.centrale.repository.UserRepository;
 import fr.balijon.centrale.service.interfaces.ServiceListInterface;
 import fr.balijon.centrale.exception.entity.user.ActivationCodeException;
@@ -33,7 +34,7 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
 
     public UserRepository userRepository;
     public RoleService roleService;
-    public AddressService addressService;
+    public AddressRepository addressRepository;
     public PasswordEncoder passwordEncoder;
 
     @Override
@@ -55,6 +56,7 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
             user.setEmail(o.getEmail());
             user.setBirthAt(o.getBirthAt());
             user.setActivationCodeSentAt(LocalDateTime.now());
+            user.setAddress(addressRepository.findById(o.getAddressId()).orElseThrow( () -> new EntityException("Address n'est pas trouvé avec id : " + o.getAddressId())));
             // Send mail ?
             return userRepository.saveAndFlush(user);
 
@@ -67,6 +69,9 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
         user.setSiret(o.getSiret());
         user.setPhone(o.getPhone());
         user.setBirthAt(o.getBirthAt());
+        if(o.getAddressId() != null) {
+            user.setAddress(addressRepository.findById(o.getAddressId()).orElseThrow( () -> new EntityException("Address n'est pas trouvé avec id : " + o.getAddressId())));
+        }
         return userRepository.saveAndFlush(user);
     }
 
@@ -85,7 +90,7 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
             Address address = user.getAddress();
             if (address!= null) {
                 address.setUser(null);
-                addressService.update(address,address.getId());
+                addressRepository.save(address);
             }
             userRepository.saveAndFlush(user);
             return true;
@@ -122,5 +127,9 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
     List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
     roles.forEach(r -> authorities.add(new SimpleGrantedAuthority(r.getLabel())));
     return authorities;
+    }
+
+    public User findOneByEmail(String name) {
+    return  userRepository.findOneByEmail(name).orElseThrow(() -> new EntityException("Pas trouvé l'user email"));
     }
 }

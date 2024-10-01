@@ -17,29 +17,31 @@ public class Listing {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @JsonView(JsonViews.UserShow.class)
+    @JsonView({JsonViews.UserShow.class,JsonViews.ListingListView.class})
     private String uuid;
 
     @Column(nullable = false)
-    @JsonView(JsonViews.UserShow.class)
+    @JsonView({JsonViews.UserShow.class, JsonViews.ListingListView.class})
     private Long price;
 
     @Column(nullable = false)
-    @JsonView(JsonViews.UserShow.class)
+    @JsonView({JsonViews.UserShow.class, JsonViews.ListingListView.class})
     private Long mileage;
 
     @Column(nullable = false)
-    @JsonView(JsonViews.UserShow.class)
+    @JsonView({JsonViews.UserShow.class,JsonViews.ListingListView.class})
     private LocalDateTime producedAt;
 
     @Column(nullable = false)
+    @JsonView({JsonViews.UserShow.class,JsonViews.ListingShow.class})
     private LocalDateTime createdAt;
 
     @Column(nullable = false, columnDefinition = "text")
+    @JsonView(JsonViews.ListingShow.class)
     private String description;
 
     @Column(nullable = false)
-    @JsonView(JsonViews.UserShow.class)
+    @JsonView({JsonViews.UserShow.class, JsonViews.ListingListView.class})
     private String title;
 
     //relations
@@ -48,21 +50,26 @@ public class Listing {
     private List<Favorite> favorites;
 
     @OneToMany(mappedBy = "listing")
+    @JsonView(JsonViews.ListingListView.class)
     private List<Image> images;
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonView(JsonViews.ListingShow.class)
     private User owner;
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonView(JsonViews.ListingShow.class)
     private Address address;
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonView(JsonViews.ListingShow.class)
     private Model model;
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonView(JsonViews.ListingShow.class)
     private Fuel fuel;
 }

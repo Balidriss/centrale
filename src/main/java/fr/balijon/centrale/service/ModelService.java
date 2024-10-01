@@ -2,6 +2,10 @@ package fr.balijon.centrale.service;
 
 
 import fr.balijon.centrale.entity.Model;
+import fr.balijon.centrale.entity.dto.ModelDTO;
+import fr.balijon.centrale.entity.dto.ModelUpdateDTO;
+import fr.balijon.centrale.exception.entity.EntityException;
+import fr.balijon.centrale.repository.BrandRepository;
 import fr.balijon.centrale.repository.ModelRepository;
 import fr.balijon.centrale.service.interfaces.ServiceListInterface;
 import jakarta.persistence.EntityNotFoundException;
@@ -12,9 +16,10 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class ModelService implements ServiceListInterface<Model, Long, Model, Model> {
+public class ModelService implements ServiceListInterface<Model, Long, ModelDTO, ModelUpdateDTO> {
 
     public ModelRepository modelRepository;
+    public BrandService brandService;
 
     @Override
     public List<Model> list() {
@@ -22,32 +27,31 @@ public class ModelService implements ServiceListInterface<Model, Long, Model, Mo
     }
 
     @Override
-    public Model create(Model o) {
+    public Model create(ModelDTO o) {
         Model model = new Model();
         model.setName(o.getName());
-        model.setBrand(o.getBrand());
-        model.setListings(o.getListings());
+        model.setBrand(brandService.findOneById(o.getBrandId()));
         return modelRepository.saveAndFlush(model);
     }
 
     @Override
-    public Model update(Model o, Long id) {
-        Model model = modelRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    public Model update(ModelUpdateDTO o, Long id) {
+        Model model = modelRepository.findById(id).orElseThrow(() -> new EntityException("Model pas trouvé",  o));
         model.setName(o.getName());
-        model.setBrand(o.getBrand());
-        model.setListings(o.getListings());
         return modelRepository.saveAndFlush(model);
     }
 
     @Override
     public Boolean delete(Long id) {
-        modelRepository.delete(findOneById(id));
+        Model model = modelRepository.findById(id).orElseThrow( () -> new EntityException("Model n'est pas trouvé avec id : " + id));
+        model.setBrand(null);
+        model.setName("Ce Modele n'éxiste plus");
+        model.setBrand(null);
         return true;
     }
 
-
     @Override
     public Model findOneById(Long id) {
-        return  modelRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        return  modelRepository.findById(id).orElseThrow(() -> new EntityException("Model n'est pas trouvé avec id : " + id));
     }
 }

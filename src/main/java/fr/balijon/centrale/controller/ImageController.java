@@ -2,6 +2,7 @@ package fr.balijon.centrale.controller;
 
 import fr.balijon.centrale.entity.Image;
 
+import fr.balijon.centrale.entity.dto.ImageDTO;
 import fr.balijon.centrale.service.ImageService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -15,28 +16,11 @@ public class ImageController {
 
     private ImageService imageService;
 
-    @GetMapping(name = "list")
-    public List<Image> list()
-    {
-        return imageService.list();
-    }
-
-    @GetMapping(value = "/{uuid}", name = "show")
-    public Image show(@PathVariable String uuid)
-    {
-        return imageService.findOneById(uuid);
-    }
-
-
     @PostMapping(name = "create")
-    public Image create(@RequestBody Image image)
+    public Image create(@RequestBody ImageDTO image)
     {
         return imageService.create(image);
     }
 
-    @PutMapping(value = "/{id}", name = "update")
-    public Image update(@PathVariable String id, @RequestBody Image image)
-    {
-        return imageService.update(image, id);
-    }
+
 }

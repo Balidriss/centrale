@@ -1,6 +1,9 @@
 package fr.balijon.centrale.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import fr.balijon.centrale.entity.Brand;
+import fr.balijon.centrale.entity.dto.BrandDTO;
+import fr.balijon.centrale.jsonviews.JsonViews;
 import fr.balijon.centrale.service.BrandService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +18,7 @@ public class BrandController {
     private BrandService brandService;
 
     @GetMapping(name = "list")
+    @JsonView(JsonViews.BrandListView.class)
     public List<Brand> list()
     {
         return brandService.list();
@@ -28,13 +32,13 @@ public class BrandController {
 
 
     @PostMapping(name = "create")
-    public Brand create(@RequestBody Brand brand)
+    public Brand create(@RequestBody BrandDTO brand)
     {
         return brandService.create(brand);
     }
 
     @PutMapping(value = "/{id}", name = "update")
-    public Brand update(@PathVariable Long id, @RequestBody Brand brand)
+    public Brand update(@PathVariable Long id, @RequestBody BrandDTO brand)
     {
         return brandService.update(brand, id);
     }

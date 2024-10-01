@@ -23,11 +23,11 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @JsonView(JsonViews.UserMinimalView.class)
+    @JsonView({JsonViews.UserMinimalView.class,JsonViews.ListingShow.class})
     private String uuid;
 
     @Column(nullable = false, unique = true)
-    @JsonView(JsonViews.UserMinimalView.class)
+    @JsonView({JsonViews.UserMinimalView.class,JsonViews.ListingShow.class})
     private String email;
 
     @Column(nullable = false)
@@ -74,7 +74,7 @@ public class User implements UserDetails {
 
     ////
 
-    @JsonView(JsonViews.UserMinimalView.class)
+    @JsonView({JsonViews.UserMinimalView.class,JsonViews.ListingShow.class})
     public boolean isActive()
     {
         return activationCode == null;
