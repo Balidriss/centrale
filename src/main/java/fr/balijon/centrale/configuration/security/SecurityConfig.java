@@ -41,7 +41,7 @@ public class SecurityConfig {
                                                 AntPathRequestMatcher.antMatcher("/v3/api-docs/**"),
                                                 AntPathRequestMatcher.antMatcher("/swagger-ui/**"),
                                                 AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/api/listing/**"),
-                                                AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/api/user/activate/**")
+                                                AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/api/user/activate/**")
                                         ).permitAll()
                                         .requestMatchers(
                                                 AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/api/user/**")
