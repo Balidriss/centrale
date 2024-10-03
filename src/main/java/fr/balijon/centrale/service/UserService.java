@@ -120,14 +120,9 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByEmailAndActivationCodeIsNull(username).orElseThrow(()-> new UsernameNotFoundException("User n'existe pas"));
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), userGrantedAuthority(user.getRoles()));
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), user.getAuthorities());
     }
 
-    private Collection<? extends GrantedAuthority> userGrantedAuthority(List<Role> roles) {
-    List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-    roles.forEach(r -> authorities.add(new SimpleGrantedAuthority(r.getLabel())));
-    return authorities;
-    }
 
     public User findOneByEmail(String name) {
     return  userRepository.findOneByEmail(name).orElseThrow(() -> new EntityException("Pas trouvé l'user email"));

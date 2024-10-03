@@ -9,7 +9,6 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
     Optional<User> findUserByActivationCode(String code);
-    Optional<User> findByEmailAndPassword(String email, String password);
     Optional<User> findByEmailAndActivationCodeIsNull(String username);
     Optional<User> findOneByEmail(String name);
 }
