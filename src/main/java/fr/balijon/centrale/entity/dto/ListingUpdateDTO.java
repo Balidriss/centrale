@@ -22,7 +22,4 @@ public class ListingUpdateDTO {
     @NotNull
     private Long mileage;
 
-    @NotBlank
-    private String title;
-
 }

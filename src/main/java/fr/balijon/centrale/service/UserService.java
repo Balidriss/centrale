@@ -16,8 +16,6 @@ import fr.balijon.centrale.exception.entity.user.ActivationCodeException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -56,7 +54,8 @@ public class UserService implements ServiceListInterface<User, String, UserDTO, 
             user.setEmail(o.getEmail());
             user.setBirthAt(o.getBirthAt());
             user.setActivationCodeSentAt(LocalDateTime.now());
-            user.setAddress(addressRepository.findById(o.getAddressId()).orElseThrow( () -> new EntityException("Address n'est pas trouvé avec id : " + o.getAddressId())));
+            //TODO: fix adress assignement
+            user.setAddress(addressRepository.findById(3L).orElseThrow( () -> new EntityException("Address n'est pas trouvé avec id : " + o.getAddressId())));
             // Send mail ?
             return userRepository.saveAndFlush(user);
 

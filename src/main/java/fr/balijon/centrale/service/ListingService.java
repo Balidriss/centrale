@@ -42,10 +42,10 @@ public class ListingService  {
         listing.setFuel(fuelService.findOneById(o.getFuelId()));
         listing.setPrice(o.getPrice());
         listing.setProducedAt(o.getProducedAt());
-        listing.setTitle(o.getTitle());
         listing.setOwner(userService.findOneByEmail(currentUser.getName()));
         listing.setAddress(addressService.findOneById(o.getAddressId()));
         listing.setMileage(o.getMileage());
+        listing.initTitle();
         return listingRepository.saveAndFlush(listing);
     }
 
@@ -54,13 +54,22 @@ public class ListingService  {
         listing.setDescription(o.getDescription());
         listing.setPrice(o.getPrice());
         listing.setMileage(o.getMileage());
-        listing.setTitle(o.getTitle());
         return listingRepository.saveAndFlush(listing);
     }
 
     public Boolean delete(String id) {
-        listingRepository.delete(findOneById(id));
-        return true;
+        try {
+            Listing listing = listingRepository.findById(id).orElseThrow(() -> new EntityException("Lisintg n'est pas trouvé avec id : " + id));
+            listing.setTitle("Annonce supprimé");
+            listing.setDescription("Annonce supprimé");
+            listing.setMileage(0L);
+            listing.setPrice(0L);
+            listing.setProducedAt(LocalDateTime.now());
+            //delete images
+            return true;
+        } catch (EntityException e) {
+            return false;
+        }
     }
 
     public Listing findOneById(String id) {

@@ -58,7 +58,7 @@ public class User implements UserDetails {
 
     //relations
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles = new ArrayList<>();
 
     @OneToOne(mappedBy = "user")

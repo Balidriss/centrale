@@ -39,11 +39,11 @@ public class Address {
 
     @Column(nullable = false)
     @JsonView({JsonViews.UserShow.class,JsonViews.ListingShow.class,JsonViews.AddressListView.class})
-    private Long latitude;
+    private String latitude;
 
     @Column(nullable = false)
     @JsonView({JsonViews.UserShow.class,JsonViews.ListingShow.class,JsonViews.AddressListView.class})
-    private Long longitude;
+    private String longitude;
 
     @OneToOne
     private User user;

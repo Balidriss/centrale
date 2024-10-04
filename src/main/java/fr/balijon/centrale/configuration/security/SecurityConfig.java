@@ -35,16 +35,18 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->
                                 auth
-                                        .requestMatchers("/**").permitAll()
                                         .requestMatchers("/api/login", "/api/register").permitAll()
                                         .requestMatchers(
                                                 AntPathRequestMatcher.antMatcher("/v3/api-docs/**"),
                                                 AntPathRequestMatcher.antMatcher("/swagger-ui/**"),
                                                 AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/api/listing/**"),
-                                                AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/api/user/activate/**")
+                                                AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/api/user/activate/**"),
+                                                AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/api/brand/**"),
+                                                AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/api/model/**")
                                         ).permitAll()
                                         .requestMatchers(
-                                                AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/api/user/**")
+                                                AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/api/user/**"),
+                                                AntPathRequestMatcher.antMatcher(HttpMethod.POST,"/api/listing/**")
                                         ).authenticated()
                                         .requestMatchers(AntPathRequestMatcher.antMatcher("/api/**")).hasAnyAuthority("ADMIN", "SUPER_ADMIN")
                             .requestMatchers(AntPathRequestMatcher.antMatcher("/admin/**")).hasAuthority("ADMIN")

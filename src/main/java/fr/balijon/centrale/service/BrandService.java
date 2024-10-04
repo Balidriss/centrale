@@ -41,16 +41,16 @@ public class BrandService implements ServiceListInterface<Brand, Long, BrandDTO,
 
     @Override
     public Boolean delete(Long id) {
-        Brand brand = brandRepository.findById(id).orElseThrow( () -> new EntityException("Brand n'est pas trouvé avec id : " + id));
-        brand.setModels(new ArrayList<Model>());
+        Brand brand = brandRepository.findById(id).orElseThrow(() -> new EntityException("Brand n'est pas trouvé avec id : " + id));
         brand.setName("Cette marque n'éxiste plus");
         brandRepository.save(brand);
         return true;
+
     }
 
 
     @Override
     public Brand findOneById(Long id) {
-        return  brandRepository.findById(id).orElseThrow(() -> new EntityException("Brand n'est pas trouvé avec id : " + id));
+        return brandRepository.findById(id).orElseThrow(() -> new EntityException("Brand n'est pas trouvé avec id : " + id));
     }
 }

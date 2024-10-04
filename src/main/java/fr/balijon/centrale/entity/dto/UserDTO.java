@@ -36,7 +36,7 @@ public class UserDTO {
     @NotBlank
     private String confirmedPassword;
 
-    @NotNull
+
     private Long addressId;
 
 }

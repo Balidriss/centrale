@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -49,9 +50,9 @@ public class Listing {
     @OneToMany(mappedBy = "listing")
     private List<Favorite> favorites;
 
-    @OneToMany(mappedBy = "listing")
-    @JsonView(JsonViews.ListingListView.class)
-    private List<Image> images;
+    @OneToMany(mappedBy = "listing", fetch = FetchType.EAGER)
+    @JsonView({JsonViews.ListingListView.class})
+    private List<Image> images = new ArrayList<Image>();
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -72,4 +73,16 @@ public class Listing {
     @JoinColumn(nullable = false)
     @JsonView(JsonViews.ListingShow.class)
     private Fuel fuel;
+
+    public void initTitle() {
+        title = "Vente de " +
+                getModel().getBrand().getName() +
+                " " + getModel().getName() +
+                " à " + getPriceDecimal();
+    }
+
+    @JsonView(JsonViews.ListingListView.class)
+    public String getPriceDecimal() {
+        return (this.price / 100.0d) + "€";
+    }
 }
