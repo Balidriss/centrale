@@ -3,10 +3,15 @@ package fr.balijon.centrale.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import fr.balijon.centrale.entity.Listing;
 import fr.balijon.centrale.entity.dto.ListingDTO;
+import fr.balijon.centrale.entity.dto.ListingListDTO;
 import fr.balijon.centrale.entity.dto.ListingUpdateDTO;
 import fr.balijon.centrale.jsonviews.JsonViews;
 import fr.balijon.centrale.service.ListingService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -20,11 +25,33 @@ public class ListingController {
     private ListingService listingService;
 
 
-    @GetMapping(name = "list")
-    @JsonView(JsonViews.ListingListView.class)
-    public List<Listing> list()
+    //@GetMapping(name = "list")
+    //@JsonView(JsonViews.ListingListView.class)
+    //public List<Listing> list()
+    //{
+    //    return listingService.list();
+    //}
+
+    @GetMapping
+    public Page<ListingListDTO> list(
+            @PageableDefault(
+                    size = 12,
+                    sort = {"createdAt"},
+                    direction = Sort.Direction.DESC
+            ) Pageable pageable
+    ) {
+        return listingService.list(pageable);
+    }
+
+    @GetMapping(value = "/search/{word}", name = "search")
+    public Page<ListingListDTO> search(
+            @PageableDefault(
+                    size = 12,
+                    sort = {"createdAt"},
+                    direction = Sort.Direction.DESC
+            ) Pageable pageable)
     {
-        return listingService.list();
+        return listingService.search(pageable);
     }
 
     @GetMapping(value = "/{uuid}", name = "show")

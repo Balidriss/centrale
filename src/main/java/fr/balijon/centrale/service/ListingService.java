@@ -6,16 +6,21 @@ package fr.balijon.centrale.service;
 import fr.balijon.centrale.entity.Fuel;
 import fr.balijon.centrale.entity.Listing;
 import fr.balijon.centrale.entity.dto.ListingDTO;
+import fr.balijon.centrale.entity.dto.ListingListDTO;
 import fr.balijon.centrale.entity.dto.ListingUpdateDTO;
 import fr.balijon.centrale.exception.entity.EntityException;
 import fr.balijon.centrale.repository.ListingRepository;
 import fr.balijon.centrale.service.interfaces.ServiceListInterface;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,8 +34,28 @@ public class ListingService  {
     public AddressService addressService;
 
 
-    public List<Listing> list() {
-        return listingRepository.findAll();
+    //public List<Listing> list() {
+    //    return listingRepository.findAll();
+    //}
+
+    public Page<ListingListDTO> list(Pageable pageable) {
+//        listingRepository.findAll(Sort.by("createdAt").descending());
+        Page<Listing> listings = listingRepository.findAll(pageable);
+        List<ListingListDTO> listDTOs = new ArrayList<>();
+        listings.forEach((item) -> {
+            listDTOs.add(new ListingListDTO(
+                    item.getUuid(),
+                    item.getTitle(),
+                    item.getPriceDecimal(),
+                    item.getMileage(),
+                    item.getProducedAt(),
+                    item.getAddress().getZipCode(),
+                    item.getModel().getName(),
+                    item.getModel().getBrand().getName(),
+                    item.getFuel().getType()
+            ));
+        });
+        return new PageImpl<>(listDTOs, pageable, listings.getTotalElements());
     }
 
     public Listing create(ListingDTO o, Principal currentUser) {
@@ -76,4 +101,7 @@ public class ListingService  {
         return listingRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
+    public Page<ListingListDTO> search(Pageable pageable) {
+
+    }
 }
